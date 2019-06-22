@@ -10,8 +10,11 @@
 // Ball manager
 #include "Headers/Ball.hpp"
 
-const int WINDOW_WIDTH = 500;
-const int WINDOW_HEIGHT = 500;
+// Score manager
+#include "Headers/Score.hpp"
+
+const int WINDOW_WIDTH = 600;
+const int WINDOW_HEIGHT = 700;
 
 int main(){
 
@@ -22,10 +25,12 @@ int main(){
   Player player(WINDOW_WIDTH, WINDOW_HEIGHT);
   PlayerAI playerAI(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  Ball ball(WINDOW_WIDTH, WINDOW_HEIGHT);
+  Score scoreMan(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+  Ball ball(WINDOW_WIDTH, WINDOW_HEIGHT, &scoreMan);
 
   // Runnning the game
-  window.run(&player, &playerAI, &ball);
+  window.run(&player, &playerAI, &ball, &scoreMan);
 
   return 0;
 }

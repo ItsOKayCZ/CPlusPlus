@@ -1,16 +1,16 @@
 #include "../Headers/Player.hpp"
 
+Player::Player(int _windowWidth, int _windowHeight)
+{
 
-Player::Player(int windowWidth, int windowHeight){
-
-  Player::windowWidth = windowWidth;
-  Player::windowHeight = windowHeight;
+  windowWidth = _windowWidth;
+  windowHeight = _windowHeight;
 
   // Setting size
   width = 20;
   height = windowHeight / 4;
   shape.setSize(sf::Vector2f(width, height));
-
+  
   // Setting position
   pos.x = 25;
   pos.y = (windowHeight / 2) - (height / 2);
@@ -62,6 +62,9 @@ void Player::update(){
   if(pos.y + height > windowHeight){
     pos.y = windowHeight - height;
   }
-
   shape.setPosition(pos);
+}
+
+sf::Vector2f Player::getPosition(){
+  return pos;
 }

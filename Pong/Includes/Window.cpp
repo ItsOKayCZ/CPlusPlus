@@ -10,7 +10,7 @@ Window::Window(int _width, int _height, std::string _title)
 }
 Window::~Window(){}
 
-void Window::run(Player *player, PlayerAI *playerAi, Ball *ball){
+void Window::run(Player *player, PlayerAI *playerAI, Ball *ball, Score *scoreMan){
 
   while(window.isOpen()){
 
@@ -45,11 +45,15 @@ void Window::run(Player *player, PlayerAI *playerAi, Ball *ball){
     }
 
     player->update();
+    ball->update(player, playerAI);
+    playerAI->update(ball->getPosition(), ball->getSize());
 
     window.clear();
     window.draw(player->getShape());
-    window.draw(playerAi->getShape());
+    window.draw(playerAI->getShape());
     window.draw(ball->getShape());
+    window.draw(scoreMan->getText()[0]);
+    window.draw(scoreMan->getText()[1]);
     window.display();
 
   }

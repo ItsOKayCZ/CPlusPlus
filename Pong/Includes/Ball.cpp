@@ -85,6 +85,7 @@ void Ball::update(Player *player, PlayerAI *playerAI){
   if(pos.x < 0){
     pos = startPos;
     angle = -90;
+    speed = 0.1;
 
     scoreMan->updateScore(1);
   }
@@ -92,6 +93,7 @@ void Ball::update(Player *player, PlayerAI *playerAI){
   if(pos.x + width > windowWidth){
     pos = startPos;
     angle = 90;
+    speed = 0.1;
 
     scoreMan->updateScore(0);
   }

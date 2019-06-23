@@ -7,10 +7,10 @@ PlayerAI::PlayerAI(int _windowWidth, int _windowHeight){
   windowHeight = _windowHeight;
 
   // Setting the speed
-  speed = 0.5;
+  speed = 0.3;
   
   // Set size
-  width = 20;
+  width = 15;
   height = windowHeight / 4;
   shape.setSize(sf::Vector2f(width, height));
 

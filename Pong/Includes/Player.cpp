@@ -7,7 +7,7 @@ Player::Player(int _windowWidth, int _windowHeight)
   windowHeight = _windowHeight;
 
   // Setting size
-  width = 20;
+  width = 15;
   height = windowHeight / 4;
   shape.setSize(sf::Vector2f(width, height));
   

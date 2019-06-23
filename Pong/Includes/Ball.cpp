@@ -14,7 +14,7 @@ Ball::Ball(int _windowWidth, int _windowHeight, Score *_scoreMan){
   windowHeight = _windowHeight;
 
   // Ball size
-  width = height = windowWidth / 20;
+  width = height = windowWidth / 30;
   shape.setSize(sf::Vector2f(width, height));
 
   // Setting position
@@ -28,8 +28,9 @@ Ball::Ball(int _windowWidth, int _windowHeight, Score *_scoreMan){
   shape.setFillColor(color);
 
   // Setting angle and speed
-  speed = 0.1;
-  angle = -45;
+  startingSpeed = 0.4;
+  speed = startingSpeed;
+  angle = -90;
   accel = 1.1;
 }
 Ball::~Ball(){}
@@ -83,17 +84,13 @@ void Ball::update(Player *player, PlayerAI *playerAI){
 
   // Touched the left side
   if(pos.x < 0){
-    pos = startPos;
-    angle = -90;
-    speed = 0.1;
+    resetProperties(-90);
 
     scoreMan->updateScore(1);
   }
   // Touched the right side
   if(pos.x + width > windowWidth){
-    pos = startPos;
-    angle = 90;
-    speed = 0.1;
+    resetProperties(90);
 
     scoreMan->updateScore(0);
   }
@@ -112,10 +109,10 @@ void Ball::checkPlayerPosition(Player *player, PlayerAI *playerAI){
 
     sf::Vector2f playerPos = player->getPosition();
     sf::Vector2f playerSize = player->getSize();
-    float tolerance = playerSize.x - (playerSize.x / 10);
+    float tolerance = playerSize.x / 5;
 
     // Checking for X
-    if((playerPos.x + tolerance > pos.x) && (pos.x < playerPos.x + playerSize.x)){
+    if((pos.x < (playerPos.x + playerSize.x)) && (pos.x > (playerPos.x + (playerSize.x - tolerance)))){
 
       // Checking for Y
       // Checking top half of paddle
@@ -221,4 +218,10 @@ void Ball::checkPlayerPosition(Player *player, PlayerAI *playerAI){
 
   }
 
+}
+
+void Ball::resetProperties(int startingAngle){
+  pos = startPos;
+  angle = startingAngle;
+  speed = startingSpeed;
 }

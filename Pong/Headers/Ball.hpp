@@ -24,6 +24,7 @@ public:
 
 private:
   void checkPlayerPosition(Player *player, PlayerAI *playerAI);
+  void resetProperties(int startingAngle);
 
   float width;
   float height;
@@ -34,6 +35,7 @@ private:
 
   sf::Vector2f vel;
   float speed;
+  float startingSpeed;
   float angle;
   sf::Vector2f pos;
   sf::Vector2f startPos;

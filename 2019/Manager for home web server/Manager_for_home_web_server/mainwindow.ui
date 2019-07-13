@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>737</width>
+    <height>647</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>0</y>
+      <width>251</width>
+      <height>631</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="directoryListLayout">
+     <item>
+      <widget class="QListWidget" name="directoryList">
+       <item>
+        <property name="text">
+         <string>Main</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>259</x>
+      <y>-1</y>
+      <width>481</width>
+      <height>631</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="directoryContentsLayout">
+     <item>
+      <widget class="QListWidget" name="directoryContents"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>737</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFiles_Folders">
+    <property name="title">
+     <string>Files/Folders</string>
+    </property>
+    <addaction name="addFiles"/>
+    <addaction name="addFolders"/>
+    <addaction name="Remove"/>
+   </widget>
+   <widget class="QMenu" name="menuUser">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="settings"/>
+    <addaction name="documentation"/>
+   </widget>
+   <addaction name="menuFiles_Folders"/>
+   <addaction name="menuUser"/>
+  </widget>
+  <action name="addFiles">
+   <property name="text">
+    <string>Add files</string>
+   </property>
+  </action>
+  <action name="addFolders">
+   <property name="text">
+    <string>Add folders</string>
+   </property>
+  </action>
+  <action name="Remove">
+   <property name="text">
+    <string>Remove</string>
+   </property>
+  </action>
+  <action name="settings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="documentation">
+   <property name="text">
+    <string>Documentation</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

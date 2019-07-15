@@ -53,10 +53,14 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Manager_for_home_web_server/main.cpp \
-		../Manager_for_home_web_server/mainwindow.cpp moc_mainwindow.cpp
+		../Manager_for_home_web_server/mainwindow.cpp \
+		../Manager_for_home_web_server/prompt.cpp moc_mainwindow.cpp \
+		moc_prompt.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		moc_mainwindow.o
+		prompt.o \
+		moc_mainwindow.o \
+		moc_prompt.o
 DIST          = /home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/common/unix.conf \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/common/linux.conf \
@@ -253,8 +257,10 @@ DIST          = /home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/features/spec_pre.p
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/features/exceptions.prf \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/features/yacc.prf \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/features/lex.prf \
-		../Manager_for_home_web_server/Manager_for_home_web_server.pro ../Manager_for_home_web_server/mainwindow.h ../Manager_for_home_web_server/main.cpp \
-		../Manager_for_home_web_server/mainwindow.cpp
+		../Manager_for_home_web_server/Manager_for_home_web_server.pro ../Manager_for_home_web_server/mainwindow.h \
+		../Manager_for_home_web_server/prompt.h ../Manager_for_home_web_server/main.cpp \
+		../Manager_for_home_web_server/mainwindow.cpp \
+		../Manager_for_home_web_server/prompt.cpp
 QMAKE_TARGET  = Manager_for_home_web_server
 DESTDIR       = 
 TARGET        = Manager_for_home_web_server
@@ -263,7 +269,7 @@ TARGET        = Manager_for_home_web_server
 first: all
 ####### Build rules
 
-Manager_for_home_web_server: ui_mainwindow.h $(OBJECTS)  
+Manager_for_home_web_server: ui_mainwindow.h ui_prompt.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../Manager_for_home_web_server/Manager_for_home_web_server.pro /home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/linux-g++/qmake.conf /home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/features/spec_pre.prf \
@@ -676,9 +682,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Manager_for_home_web_server/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Manager_for_home_web_server/main.cpp ../Manager_for_home_web_server/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Manager_for_home_web_server/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Manager_for_home_web_server/mainwindow.h ../Manager_for_home_web_server/prompt.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Manager_for_home_web_server/main.cpp ../Manager_for_home_web_server/mainwindow.cpp ../Manager_for_home_web_server/prompt.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Manager_for_home_web_server/mainwindow.ui ../Manager_for_home_web_server/prompt.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -710,12 +716,13 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_prompt.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_prompt.cpp
 moc_mainwindow.cpp: ../Manager_for_home_web_server/mainwindow.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QMainWindow \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qmainwindow.h \
+		../Manager_for_home_web_server/prompt.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QWidget \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtguiglobal.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qglobal.h \
@@ -741,7 +748,6 @@ moc_mainwindow.cpp: ../Manager_for_home_web_server/mainwindow.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qversiontagging.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtgui-config.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qwindowdefs.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qnamespace.h \
@@ -818,13 +824,39 @@ moc_mainwindow.cpp: ../Manager_for_home_web_server/mainwindow.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfiledevice.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qvector2d.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QMainWindow \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qicon.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QJsonDocument \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qjsondocument.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qjsonvalue.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QJsonValue \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QJsonArray \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qjsonarray.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QFileDialog \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qfiledialog.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qdir.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfileinfo.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qdialog.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QListWidgetItem \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlistwidget.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlistview.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qframe.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qvalidator.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qregularexpression.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qslider.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qstyle.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qrubberband.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork/QNetworkAccessManager \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork/qnetworkaccessmanager.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork/qtnetworkglobal.h \
@@ -859,30 +891,9 @@ moc_mainwindow.cpp: ../Manager_for_home_web_server/mainwindow.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/moc
 	/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/moc $(DEFINES) --include '/home/oldrich/Projects/CPlusPlus/2019/Manager for home web server/build-Manager_for_home_web_server-Desktop_Qt_5_13_0_GCC_64bit-Debug/moc_predefs.h' -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/linux-g++ -I'/home/oldrich/Projects/CPlusPlus/2019/Manager for home web server/Manager_for_home_web_server' -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Manager_for_home_web_server/mainwindow.h -o moc_mainwindow.cpp
 
-compiler_moc_objc_header_make_all:
-compiler_moc_objc_header_clean:
-compiler_moc_source_make_all:
-compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
-compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
-ui_mainwindow.h: ../Manager_for_home_web_server/mainwindow.ui \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/uic
-	/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/uic ../Manager_for_home_web_server/mainwindow.ui -o ui_mainwindow.h
-
-compiler_yacc_decl_make_all:
-compiler_yacc_decl_clean:
-compiler_yacc_impl_make_all:
-compiler_yacc_impl_clean:
-compiler_lex_make_all:
-compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
-
-####### Compile
-
-main.o: ../Manager_for_home_web_server/main.cpp ../Manager_for_home_web_server/mainwindow.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QMainWindow \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qmainwindow.h \
+moc_prompt.cpp: ../Manager_for_home_web_server/prompt.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QWidget \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtguiglobal.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qglobal.h \
@@ -908,7 +919,6 @@ main.o: ../Manager_for_home_web_server/main.cpp ../Manager_for_home_web_server/m
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qversiontagging.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtgui-config.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qwindowdefs.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qnamespace.h \
@@ -985,13 +995,173 @@ main.o: ../Manager_for_home_web_server/main.cpp ../Manager_for_home_web_server/m
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfiledevice.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qvector2d.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtouchdevice.h \
+		moc_predefs.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/moc
+	/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/moc $(DEFINES) --include '/home/oldrich/Projects/CPlusPlus/2019/Manager for home web server/build-Manager_for_home_web_server-Desktop_Qt_5_13_0_GCC_64bit-Debug/moc_predefs.h' -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/mkspecs/linux-g++ -I'/home/oldrich/Projects/CPlusPlus/2019/Manager for home web server/Manager_for_home_web_server' -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork -I/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Manager_for_home_web_server/prompt.h -o moc_prompt.cpp
+
+compiler_moc_objc_header_make_all:
+compiler_moc_objc_header_clean:
+compiler_moc_source_make_all:
+compiler_moc_source_clean:
+compiler_uic_make_all: ui_mainwindow.h ui_prompt.h
+compiler_uic_clean:
+	-$(DEL_FILE) ui_mainwindow.h ui_prompt.h
+ui_mainwindow.h: ../Manager_for_home_web_server/mainwindow.ui \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/uic
+	/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/uic ../Manager_for_home_web_server/mainwindow.ui -o ui_mainwindow.h
+
+ui_prompt.h: ../Manager_for_home_web_server/prompt.ui \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/uic
+	/home/oldrich/Tools/Qt/5.13.0/gcc_64/bin/uic ../Manager_for_home_web_server/prompt.ui -o ui_prompt.h
+
+compiler_yacc_decl_make_all:
+compiler_yacc_decl_clean:
+compiler_yacc_impl_make_all:
+compiler_yacc_impl_clean:
+compiler_lex_make_all:
+compiler_lex_clean:
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+
+####### Compile
+
+main.o: ../Manager_for_home_web_server/main.cpp ../Manager_for_home_web_server/mainwindow.h \
+		../Manager_for_home_web_server/prompt.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QWidget \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qwidget.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qglobal.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qconfig.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qtcore-config.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsysinfo.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qlogging.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qflags.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qatomic.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qmutex.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qnumeric.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qversiontagging.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtgui-config.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qnamespace.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobject.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstring.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qchar.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qrefcount.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringliteral.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringview.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qlist.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qalgorithms.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qiterator.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qpair.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qvector.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qpoint.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringlist.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qregexp.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qcoreevent.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qmetatype.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobject_impl.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qmargins.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qrect.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsize.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpalette.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qcolor.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qrgb.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qrgba64.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qbrush.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qmatrix.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpolygon.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qregion.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qdatastream.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qiodevice.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qline.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtransform.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpainterpath.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qimage.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpixelformat.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpixmap.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qshareddata.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qhash.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qfont.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qfontinfo.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qcursor.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qkeysequence.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qevent.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qvariant.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qmap.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qdebug.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qtextstream.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qlocale.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qset.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qurl.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qurlquery.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfile.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfiledevice.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qvector2d.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QMainWindow \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qicon.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QJsonDocument \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qjsondocument.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qjsonvalue.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QJsonValue \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QJsonArray \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qjsonarray.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QFileDialog \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qfiledialog.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qdir.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfileinfo.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qdialog.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QListWidgetItem \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlistwidget.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlistview.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qframe.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qvalidator.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qregularexpression.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qslider.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qstyle.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qrubberband.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork/QNetworkAccessManager \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork/qnetworkaccessmanager.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork/qtnetworkglobal.h \
@@ -1032,8 +1202,9 @@ main.o: ../Manager_for_home_web_server/main.cpp ../Manager_for_home_web_server/m
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Manager_for_home_web_server/main.cpp
 
 mainwindow.o: ../Manager_for_home_web_server/mainwindow.cpp ../Manager_for_home_web_server/mainwindow.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QMainWindow \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qmainwindow.h \
+		../Manager_for_home_web_server/prompt.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QWidget \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtguiglobal.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qglobal.h \
@@ -1059,7 +1230,6 @@ mainwindow.o: ../Manager_for_home_web_server/mainwindow.cpp ../Manager_for_home_
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qversiontagging.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtgui-config.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qwindowdefs.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qnamespace.h \
@@ -1136,13 +1306,39 @@ mainwindow.o: ../Manager_for_home_web_server/mainwindow.cpp ../Manager_for_home_
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfiledevice.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qvector2d.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QMainWindow \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qicon.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QJsonDocument \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qjsondocument.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qjsonvalue.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QJsonValue \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QJsonArray \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qjsonarray.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QFileDialog \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qfiledialog.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qdir.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfileinfo.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qdialog.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QListWidgetItem \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlistwidget.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlistview.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qframe.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qvalidator.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qregularexpression.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qslider.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qstyle.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qrubberband.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork/QNetworkAccessManager \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork/qnetworkaccessmanager.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtNetwork/qtnetworkglobal.h \
@@ -1184,33 +1380,159 @@ mainwindow.o: ../Manager_for_home_web_server/mainwindow.cpp ../Manager_for_home_
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qguiapplication.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qinputmethod.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QLabel \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlabel.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QListWidget \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlistwidget.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlistview.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractitemview.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qframe.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qabstractitemmodel.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qitemselectionmodel.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qstyleoption.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qvalidator.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qregularexpression.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qslider.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractslider.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qstyle.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtabbar.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qrubberband.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QMenu \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qmenu.h \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QMenuBar \
 		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qmenubar.h \
-		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QWidget
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QVBoxLayout \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlayout.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qgridlayout.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Manager_for_home_web_server/mainwindow.cpp
+
+prompt.o: ../Manager_for_home_web_server/prompt.cpp ../Manager_for_home_web_server/prompt.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QWidget \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qwidget.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qglobal.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qconfig.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qtcore-config.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsysinfo.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qlogging.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qflags.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qatomic.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qmutex.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qnumeric.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qversiontagging.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtgui-config.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qnamespace.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobject.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstring.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qchar.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qbytearray.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qrefcount.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qarraydata.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringliteral.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringview.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qlist.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qalgorithms.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qiterator.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qpair.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qvector.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qpoint.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringlist.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qregexp.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qcoreevent.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qmetatype.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qobject_impl.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qmargins.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qrect.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsize.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpalette.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qcolor.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qrgb.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qrgba64.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qbrush.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qmatrix.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpolygon.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qregion.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qdatastream.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qiodevice.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qline.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtransform.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpainterpath.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qimage.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpixelformat.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpixmap.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qshareddata.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qhash.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qfont.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qfontinfo.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qcursor.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qkeysequence.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qevent.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qvariant.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qmap.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qdebug.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qtextstream.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qlocale.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qset.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qurl.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qurlquery.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfile.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qfiledevice.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qvector2d.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtouchdevice.h \
+		ui_prompt.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/QVariant \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QApplication \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qapplication.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtCore/qeventloop.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qguiapplication.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qinputmethod.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QDialog \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qdialog.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QDialogButtonBox \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qdialogbuttonbox.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/QPlainTextEdit \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qplaintextedit.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qtextedit.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtWidgets/qframe.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtextdocument.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtextoption.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtextcursor.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtextformat.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qpen.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qabstracttextdocumentlayout.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qtextlayout.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qglyphrun.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qrawfont.h \
+		/home/oldrich/Tools/Qt/5.13.0/gcc_64/include/QtGui/qfontdatabase.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o prompt.o ../Manager_for_home_web_server/prompt.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_prompt.o: moc_prompt.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_prompt.o moc_prompt.cpp
 
 ####### Install
 

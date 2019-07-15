@@ -70,7 +70,6 @@ public:
         directoryListLayout->setObjectName(QString::fromUtf8("directoryListLayout"));
         directoryListLayout->setContentsMargins(0, 0, 0, 0);
         directoryList = new QListWidget(verticalLayoutWidget);
-        new QListWidgetItem(directoryList);
         directoryList->setObjectName(QString::fromUtf8("directoryList"));
 
         directoryListLayout->addWidget(directoryList);
@@ -125,13 +124,6 @@ public:
         Remove->setText(QCoreApplication::translate("MainWindow", "Remove", nullptr));
         settings->setText(QCoreApplication::translate("MainWindow", "Settings", nullptr));
         documentation->setText(QCoreApplication::translate("MainWindow", "Documentation", nullptr));
-
-        const bool __sortingEnabled = directoryList->isSortingEnabled();
-        directoryList->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = directoryList->item(0);
-        ___qlistwidgetitem->setText(QCoreApplication::translate("MainWindow", "Main", nullptr));
-        directoryList->setSortingEnabled(__sortingEnabled);
-
         directoryLabel->setText(QCoreApplication::translate("MainWindow", "Directory:", nullptr));
         menuFiles_Folders->setTitle(QCoreApplication::translate("MainWindow", "Files/Folders", nullptr));
         menuUser->setTitle(QCoreApplication::translate("MainWindow", "Help", nullptr));

@@ -3,7 +3,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    prompt()
 {
     ui->setupUi(this);
 
@@ -12,8 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
     manager = new QNetworkAccessManager();
 
     QObject::connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply){
+        ui->directoryList->clear();
+        ui->directoryContents->clear();
+
         if(reply->error()){
             qDebug() << reply->errorString();
+            ui->directoryContents->addItem(reply->errorString());
             return;
         }
 
@@ -32,8 +37,6 @@ MainWindow::MainWindow(QWidget *parent) :
             }
         }
 
-        ui->directoryList->clear();
-        ui->directoryContents->clear();
         ui->directoryList->addItems(list);
     });
 
@@ -176,4 +179,13 @@ void MainWindow::on_directoryContents_itemClicked(QListWidgetItem *item)
 
         updateDirectoryContents(itemPath);
     }
+}
+
+void MainWindow::on_addFolders_triggered()
+{
+    prompt.display(/*&MainWindow::setFolderName*/);
+}
+
+void MainWindow::setFolderName(QString folderName){
+    qDebug() << folderName;
 }

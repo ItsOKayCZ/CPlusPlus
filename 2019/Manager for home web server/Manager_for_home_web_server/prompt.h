@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include <QAbstractButton>
+#include <QLineEdit>
 
 #include <QDebug>
 
@@ -19,10 +20,7 @@ public:
     explicit Prompt(QWidget *parent = nullptr);
     ~Prompt();
 
-    void display();
-
-private slots:
-    void on_buttonBox_clicked(QAbstractButton *button);
+    QString display();
 
 private:
     Ui::Prompt *ui;

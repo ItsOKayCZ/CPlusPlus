@@ -12,7 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QPlainTextEdit>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -20,21 +20,21 @@ QT_BEGIN_NAMESPACE
 class Ui_Prompt
 {
 public:
-    QDialogButtonBox *buttonBox;
-    QPlainTextEdit *plainTextEdit;
+    QDialogButtonBox *buttons;
+    QLineEdit *inputField;
 
     void setupUi(QWidget *Prompt)
     {
         if (Prompt->objectName().isEmpty())
             Prompt->setObjectName(QString::fromUtf8("Prompt"));
         Prompt->resize(400, 73);
-        buttonBox = new QDialogButtonBox(Prompt);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(220, 40, 166, 24));
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        plainTextEdit = new QPlainTextEdit(Prompt);
-        plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(10, 10, 381, 25));
+        buttons = new QDialogButtonBox(Prompt);
+        buttons->setObjectName(QString::fromUtf8("buttons"));
+        buttons->setGeometry(QRect(220, 40, 166, 24));
+        buttons->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        inputField = new QLineEdit(Prompt);
+        inputField->setObjectName(QString::fromUtf8("inputField"));
+        inputField->setGeometry(QRect(10, 10, 381, 22));
 
         retranslateUi(Prompt);
 
@@ -44,8 +44,7 @@ public:
     void retranslateUi(QWidget *Prompt)
     {
         Prompt->setWindowTitle(QCoreApplication::translate("Prompt", "Enter folder name", nullptr));
-        plainTextEdit->setPlainText(QString());
-        plainTextEdit->setPlaceholderText(QCoreApplication::translate("Prompt", "Enter folder name", nullptr));
+        inputField->setPlaceholderText(QCoreApplication::translate("Prompt", "Enter folder name", nullptr));
     } // retranslateUi
 
 };

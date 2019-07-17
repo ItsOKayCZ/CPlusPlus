@@ -6,9 +6,6 @@ Prompt::Prompt(QWidget *parent) :
     ui(new Ui::Prompt)
 {
     ui->setupUi(this);
-
-
-//    parent->setFolderName("Testing");
 }
 
 Prompt::~Prompt()
@@ -16,13 +13,18 @@ Prompt::~Prompt()
     delete ui;
 }
 
-void Prompt::on_buttonBox_clicked(QAbstractButton *button)
-{
-    QString type = button->text();
-
-    qDebug() << type;
-}
-
-void Prompt::display(/*void *function*/){
+QString Prompt::display(){
     this->show();
+
+    QEventLoop loop;
+    QObject::connect(ui->buttons, SIGNAL(accepted()), &loop, SLOT(quit()));
+    QObject::connect(ui->buttons, SIGNAL(rejected()), this, SLOT(close()));
+    loop.exec();
+
+    this->close();
+
+    QString inputField = ui->inputField->text();
+    ui->inputField->clear();
+
+    return inputField;
 }

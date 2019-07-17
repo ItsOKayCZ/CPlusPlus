@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply){
         ui->directoryList->clear();
         ui->directoryContents->clear();
+        ui->directoryLabel->setText("Directory:");
 
         if(reply->error()){
             qDebug() << reply->errorString();
@@ -156,11 +157,12 @@ void MainWindow::updateDirectoryContents(QString directory){
 
     if(list.size() > 0){
         ui->directoryContents->addItems(list);
-        ui->directoryLabel->setText("Directory: " + itemPath);
     } else {
         QString msg = "No files or folders in directory";
         ui->directoryContents->addItem(msg);
     }
+
+    ui->directoryLabel->setText("Directory: " + itemPath);
 }
 
 void MainWindow::on_directoryContents_itemClicked(QListWidgetItem *item)
@@ -183,9 +185,17 @@ void MainWindow::on_directoryContents_itemClicked(QListWidgetItem *item)
 
 void MainWindow::on_addFolders_triggered()
 {
-    prompt.display(/*&MainWindow::setFolderName*/);
-}
+    QString folderName = prompt.display();
 
-void MainWindow::setFolderName(QString folderName){
-    qDebug() << folderName;
+    if(folderName.replace(" ", "") == ""){
+        return;
+    }
+
+    if(itemPath != ""){
+        itemPath += "/";
+    }
+    itemPath += folderName;
+
+    ui->directoryLabel->setText("Directory: " + itemPath);
+    ui->directoryContents->clear();
 }

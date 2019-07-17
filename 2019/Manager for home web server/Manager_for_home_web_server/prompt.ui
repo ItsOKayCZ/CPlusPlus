@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Enter folder name</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
+  <widget class="QDialogButtonBox" name="buttons">
    <property name="geometry">
     <rect>
      <x>220</x>
@@ -26,17 +26,14 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit">
+  <widget class="QLineEdit" name="inputField">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
      <width>381</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
-   </property>
-   <property name="plainText">
-    <string/>
    </property>
    <property name="placeholderText">
     <string>Enter folder name</string>

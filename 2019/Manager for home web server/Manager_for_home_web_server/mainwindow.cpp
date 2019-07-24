@@ -61,6 +61,7 @@ void MainWindow::on_addFiles_triggered()
 
         QFile file(path);
         if(file.open(QIODevice::ReadOnly)){
+
             QString fileName = file.fileName().section("/", -1, -1);
 
             QString path;
@@ -70,9 +71,10 @@ void MainWindow::on_addFiles_triggered()
                 path = itemPath + "/" + fileName;
             }
 
-            QString fileContent = file.readAll().toBase64();
-            request.setUrl(QUrl(url + "/uploadFile?path=" + path + "&content=" + fileContent));
-            manager->get(request);
+
+            request.setUrl(QUrl(url + "uploadFile?path=" + path));
+            request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+            manager->post(request, "file=" + file.readAll().toBase64());
         }
 
     }

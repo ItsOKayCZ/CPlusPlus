@@ -17,7 +17,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -31,13 +30,9 @@ public:
     QAction *settings;
     QAction *documentation;
     QWidget *centralWidget;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *directoryListLayout;
-    QListWidget *directoryList;
-    QWidget *verticalLayoutWidget_2;
-    QVBoxLayout *directoryContentsLayout;
-    QListWidget *directoryContents;
     QLabel *directoryLabel;
+    QListWidget *directoryContents;
+    QListWidget *directoryList;
     QMenuBar *menuBar;
     QMenu *menuFiles_Folders;
     QMenu *menuUser;
@@ -61,38 +56,21 @@ public:
         documentation->setObjectName(QString::fromUtf8("documentation"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        verticalLayoutWidget = new QWidget(centralWidget);
-        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(-1, 0, 251, 631));
-        directoryListLayout = new QVBoxLayout(verticalLayoutWidget);
-        directoryListLayout->setSpacing(6);
-        directoryListLayout->setContentsMargins(11, 11, 11, 11);
-        directoryListLayout->setObjectName(QString::fromUtf8("directoryListLayout"));
-        directoryListLayout->setContentsMargins(0, 0, 0, 0);
-        directoryList = new QListWidget(verticalLayoutWidget);
-        directoryList->setObjectName(QString::fromUtf8("directoryList"));
-
-        directoryListLayout->addWidget(directoryList);
-
-        verticalLayoutWidget_2 = new QWidget(centralWidget);
-        verticalLayoutWidget_2->setObjectName(QString::fromUtf8("verticalLayoutWidget_2"));
-        verticalLayoutWidget_2->setGeometry(QRect(259, 29, 481, 601));
-        directoryContentsLayout = new QVBoxLayout(verticalLayoutWidget_2);
-        directoryContentsLayout->setSpacing(6);
-        directoryContentsLayout->setContentsMargins(11, 11, 11, 11);
-        directoryContentsLayout->setObjectName(QString::fromUtf8("directoryContentsLayout"));
-        directoryContentsLayout->setContentsMargins(0, 0, 0, 0);
-        directoryContents = new QListWidget(verticalLayoutWidget_2);
-        directoryContents->setObjectName(QString::fromUtf8("directoryContents"));
-
-        directoryContentsLayout->addWidget(directoryContents);
-
         directoryLabel = new QLabel(centralWidget);
         directoryLabel->setObjectName(QString::fromUtf8("directoryLabel"));
         directoryLabel->setGeometry(QRect(260, 0, 481, 21));
         directoryLabel->setStyleSheet(QString::fromUtf8("border: 1px solid black;\n"
 "\n"
 "background-color: white;"));
+        directoryContents = new QListWidget(centralWidget);
+        directoryContents->setObjectName(QString::fromUtf8("directoryContents"));
+        directoryContents->setGeometry(QRect(260, 30, 471, 591));
+        directoryContents->setContextMenuPolicy(Qt::CustomContextMenu);
+        directoryList = new QListWidget(centralWidget);
+        directoryList->setObjectName(QString::fromUtf8("directoryList"));
+        directoryList->setGeometry(QRect(8, 0, 241, 621));
+        directoryList->setContextMenuPolicy(Qt::CustomContextMenu);
+        directoryList->setSelectionMode(QAbstractItemView::SingleSelection);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));

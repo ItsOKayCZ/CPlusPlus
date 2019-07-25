@@ -8,10 +8,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(ui->directoryList, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(display_menu_on_click(const QPoint &)));
+    connect(ui->directoryContents, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(display_menu_on_click(const QPoint &)));
 
+    // TODO: Clear item selection when clicked another item in the second
+    //       widget is clicked
+    // connect();
 
     manager = new QNetworkAccessManager();
 
+    // Getting data from the API
     QObject::connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply){
         ui->directoryList->clear();
         ui->directoryContents->clear();
@@ -52,6 +58,9 @@ MainWindow::~MainWindow()
     delete manager;
 }
 
+
+// Adding files to the currently selected directory
+// If no directory selected, it is added to the root
 void MainWindow::on_addFiles_triggered()
 {
     QStringList filePath = QFileDialog::getOpenFileNames(this, "Select a file", "/home/oldrich/Desktop", "All files (*)");
@@ -81,6 +90,8 @@ void MainWindow::on_addFiles_triggered()
 
 }
 
+// Changing the directoryContents widget to display
+// all the contents of the folder selected
 void MainWindow::on_directoryList_itemPressed(QListWidgetItem *item)
 {
     itemPath = item->text();
@@ -92,6 +103,7 @@ void MainWindow::on_directoryList_itemPressed(QListWidgetItem *item)
 
 }
 
+// Displays the contents of a directory
 void MainWindow::updateDirectoryContents(QString directory){
 
     ui->directoryContents->clear();
@@ -167,6 +179,7 @@ void MainWindow::updateDirectoryContents(QString directory){
     ui->directoryLabel->setText("Directory: " + itemPath);
 }
 
+// Changes the directoryContents when clicked
 void MainWindow::on_directoryContents_itemClicked(QListWidgetItem *item)
 {
     QString name = item->text();
@@ -185,6 +198,7 @@ void MainWindow::on_directoryContents_itemClicked(QListWidgetItem *item)
     }
 }
 
+// Adds a folder to the current directory
 void MainWindow::on_addFolders_triggered()
 {
     QString folderName = prompt.display();
@@ -200,4 +214,40 @@ void MainWindow::on_addFolders_triggered()
 
     ui->directoryLabel->setText("Directory: " + itemPath);
     ui->directoryContents->clear();
+}
+
+// When right clicked on the directoryContent widget
+// the same menu is showed when clicked on the menubar
+void MainWindow::display_menu_on_click(const QPoint &pos)
+{
+    Q_UNUSED(pos);
+
+    QMenu menu("Options", this);
+
+    menu.addAction("Add files", this, &MainWindow::on_addFiles_triggered);
+    menu.addAction("Add folder", this, &MainWindow::on_addFolders_triggered);
+    menu.addAction("Remove selection", this, &MainWindow::remove_file_or_folders);
+    menu.exec(QCursor::pos());
+}
+
+// Removes a file or a folder
+void MainWindow::remove_file_or_folders(){
+
+    QList<QListWidgetItem *> directoryListSelection = ui->directoryList->selectedItems();
+    QList<QListWidgetItem *> directoryContentsSelection = ui->directoryContents->selectedItems();
+    QListWidgetItem *item;
+
+    if(directoryListSelection.size() == 1){
+        item = directoryListSelection[0];
+    } else if(directoryContentsSelection.size() == 1){
+        item = directoryContentsSelection[0];
+    } else {
+        return;
+    }
+
+    qDebug() << item->text();
+}
+
+void MainWindow::testing(){
+    qDebug() << "Testing";
 }

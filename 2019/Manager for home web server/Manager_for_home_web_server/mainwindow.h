@@ -17,6 +17,8 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
+#include <QMenu>
+
 #include <QDebug>
 
 namespace Ui {
@@ -31,16 +33,30 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void setFolderName(QString folderName);
-
 private slots:
+
+    // Adding files to the currently selected directory
+    // If no directory selected, it is added to the root
     void on_addFiles_triggered();
 
+    // Changing the directoryContents widget to display
+    // all the contents of the folder selected
     void on_directoryList_itemPressed(QListWidgetItem *item);
 
+    // Changes the directoryContents when clicked
     void on_directoryContents_itemClicked(QListWidgetItem *item);
 
+    // Adds a folder to the current directory
     void on_addFolders_triggered();
+
+    // When right clicked on the directoryContent widget
+    // the same menu is showed when clicked on the menubar
+    void display_menu_on_click(const QPoint &pos);
+
+    // Removes a file or a folder
+    void remove_file_or_folders();
+
+    void testing();
 
 private:
     Ui::MainWindow *ui;
@@ -55,6 +71,7 @@ private:
 
     Prompt prompt;
 
+    // Displays the contents of a directory
     void updateDirectoryContents(QString path);
 
 };

@@ -19,6 +19,8 @@
 
 #include <QMenu>
 
+#include <QMessageBox>
+
 #include <QDebug>
 
 namespace Ui {
@@ -41,22 +43,23 @@ private slots:
 
     // Changing the directoryContents widget to display
     // all the contents of the folder selected
-    void on_directoryList_itemPressed(QListWidgetItem *item);
+    void on_directoryList_itemPressed(QListWidgetItem *);
 
     // Changes the directoryContents when clicked
-    void on_directoryContents_itemClicked(QListWidgetItem *item);
+    void on_directoryContents_itemClicked(QListWidgetItem *);
 
     // Adds a folder to the current directory
     void on_addFolders_triggered();
 
     // When right clicked on the directoryContent widget
     // the same menu is showed when clicked on the menubar
-    void display_menu_on_click(const QPoint &pos);
+    void display_menu_on_click(const QPoint &);
 
     // Removes a file or a folder
     void remove_file_or_folders();
 
-    void testing();
+    // Removes the selection in the QListWidget
+    void clear_selection(QListWidgetItem *);
 
 private:
     Ui::MainWindow *ui;

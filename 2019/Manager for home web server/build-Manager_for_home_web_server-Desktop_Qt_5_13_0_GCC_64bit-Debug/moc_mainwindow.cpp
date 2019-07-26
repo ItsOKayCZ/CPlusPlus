@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[12];
-    char stringdata0[199];
+    QByteArrayData data[10];
+    char stringdata0[198];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,21 +37,18 @@ QT_MOC_LITERAL(1, 11, 21), // "on_addFiles_triggered"
 QT_MOC_LITERAL(2, 33, 0), // ""
 QT_MOC_LITERAL(3, 34, 28), // "on_directoryList_itemPressed"
 QT_MOC_LITERAL(4, 63, 16), // "QListWidgetItem*"
-QT_MOC_LITERAL(5, 80, 4), // "item"
-QT_MOC_LITERAL(6, 85, 32), // "on_directoryContents_itemClicked"
-QT_MOC_LITERAL(7, 118, 23), // "on_addFolders_triggered"
-QT_MOC_LITERAL(8, 142, 21), // "display_menu_on_click"
-QT_MOC_LITERAL(9, 164, 3), // "pos"
-QT_MOC_LITERAL(10, 168, 22), // "remove_file_or_folders"
-QT_MOC_LITERAL(11, 191, 7) // "testing"
+QT_MOC_LITERAL(5, 80, 32), // "on_directoryContents_itemClicked"
+QT_MOC_LITERAL(6, 113, 23), // "on_addFolders_triggered"
+QT_MOC_LITERAL(7, 137, 21), // "display_menu_on_click"
+QT_MOC_LITERAL(8, 159, 22), // "remove_file_or_folders"
+QT_MOC_LITERAL(9, 182, 15) // "clear_selection"
 
     },
     "MainWindow\0on_addFiles_triggered\0\0"
     "on_directoryList_itemPressed\0"
-    "QListWidgetItem*\0item\0"
-    "on_directoryContents_itemClicked\0"
+    "QListWidgetItem*\0on_directoryContents_itemClicked\0"
     "on_addFolders_triggered\0display_menu_on_click\0"
-    "pos\0remove_file_or_folders\0testing"
+    "remove_file_or_folders\0clear_selection"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,20 +68,20 @@ static const uint qt_meta_data_MainWindow[] = {
  // slots: name, argc, parameters, tag, flags
        1,    0,   49,    2, 0x08 /* Private */,
        3,    1,   50,    2, 0x08 /* Private */,
-       6,    1,   53,    2, 0x08 /* Private */,
-       7,    0,   56,    2, 0x08 /* Private */,
-       8,    1,   57,    2, 0x08 /* Private */,
-      10,    0,   60,    2, 0x08 /* Private */,
-      11,    0,   61,    2, 0x08 /* Private */,
+       5,    1,   53,    2, 0x08 /* Private */,
+       6,    0,   56,    2, 0x08 /* Private */,
+       7,    1,   57,    2, 0x08 /* Private */,
+       8,    0,   60,    2, 0x08 /* Private */,
+       9,    1,   61,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 4,    5,
-    QMetaType::Void, 0x80000000 | 4,    5,
+    QMetaType::Void, 0x80000000 | 4,    2,
+    QMetaType::Void, 0x80000000 | 4,    2,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QPoint,    9,
+    QMetaType::Void, QMetaType::QPoint,    2,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 4,    2,
 
        0        // eod
 };
@@ -101,7 +98,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->on_addFolders_triggered(); break;
         case 4: _t->display_menu_on_click((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
         case 5: _t->remove_file_or_folders(); break;
-        case 6: _t->testing(); break;
+        case 6: _t->clear_selection((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
         default: ;
         }
     }

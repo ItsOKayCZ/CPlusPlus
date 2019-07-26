@@ -56,6 +56,14 @@ background-color: white;</string>
     <property name="contextMenuPolicy">
      <enum>Qt::CustomContextMenu</enum>
     </property>
+    <item>
+     <property name="text">
+      <string>Testing</string>
+     </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
+    </item>
    </widget>
    <widget class="QListWidget" name="directoryList">
     <property name="geometry">

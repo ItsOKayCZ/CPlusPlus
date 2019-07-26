@@ -13,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // TODO: Clear item selection when clicked another item in the second
     //       widget is clicked
-    // connect();
+    connect(ui->directoryList, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(clear_selection(QListWidgetItem *)));
+    connect(ui->directoryContents, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(clear_selection(QListWidgetItem *)));
 
     manager = new QNetworkAccessManager();
 
@@ -45,6 +46,9 @@ MainWindow::MainWindow(QWidget *parent) :
         }
 
         ui->directoryList->addItems(list);
+
+        QListWidgetItem *firstItem = ui->directoryList->itemAt(QPoint(0, 0));
+        firstItem->setFlags(firstItem->flags() & Qt::ItemIsEnabled);
     });
 
 
@@ -100,7 +104,6 @@ void MainWindow::on_directoryList_itemPressed(QListWidgetItem *item)
     }
 
     this->updateDirectoryContents(itemPath);
-
 }
 
 // Displays the contents of a directory
@@ -176,6 +179,9 @@ void MainWindow::updateDirectoryContents(QString directory){
         ui->directoryContents->addItem(msg);
     }
 
+    QListWidgetItem *firstItem = ui->directoryContents->itemAt(QPoint(0, 0));
+    firstItem->setFlags(firstItem->flags() & Qt::ItemIsEnabled);
+
     ui->directoryLabel->setText("Directory: " + itemPath);
 }
 
@@ -235,19 +241,43 @@ void MainWindow::remove_file_or_folders(){
 
     QList<QListWidgetItem *> directoryListSelection = ui->directoryList->selectedItems();
     QList<QListWidgetItem *> directoryContentsSelection = ui->directoryContents->selectedItems();
-    QListWidgetItem *item;
+    QString itemName;
 
     if(directoryListSelection.size() == 1){
-        item = directoryListSelection[0];
+        itemName = directoryListSelection[0]->text();
     } else if(directoryContentsSelection.size() == 1){
-        item = directoryContentsSelection[0];
+        itemName = itemPath + "/" + directoryContentsSelection[0]->text().split("\t")[0];
     } else {
         return;
     }
 
-    qDebug() << item->text();
+
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Are you sure?", "Are you sure you want to delete " + itemName, QMessageBox::Yes|QMessageBox::No);
+
+    if(reply == QMessageBox::No){
+        return;
+    }
+
+    itemName = itemName.split("\t")[0];
+
+    request.setUrl(QUrl(url + "remove?path=" + itemName));
+    manager->get(request);
+
 }
 
-void MainWindow::testing(){
-    qDebug() << "Testing";
+// Removes the selection in the QListWidget
+void MainWindow::clear_selection(QListWidgetItem *item){
+    Q_UNUSED(item);
+
+
+    QString name = sender()->objectName();
+
+    if(name == "directoryList"){
+        ui->directoryContents->clearSelection();
+    } else if(name == "directoryContents"){
+        ui->directoryList->clearSelection();
+    }
+
+
 }

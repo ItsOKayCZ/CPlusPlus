@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
 
-    request.setUrl(QUrl(url + "getFolders"));
+    request.setUrl(QUrl(url + "setCookie"));
     manager->get(request);
 }
 

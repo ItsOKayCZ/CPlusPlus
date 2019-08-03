@@ -4,15 +4,40 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    prompt()
+    prompt(),
+    settings()
 {
     ui->setupUi(this);
 
+
+    // Opening the info file to get the cookie and the url
+    QFile infoFile(QDir::currentPath() + "/info");
+    infoFile.open(QIODevice::ReadOnly);
+    QList<QByteArray> contents = infoFile.readAll().split(0x0a);
+
+    // If the settings are correct
+    if(contents.size() == 2){
+        url = contents[urlIndex];
+        cookie = contents[cookieIndex];
+    } else {
+        on_settings_triggered(true);
+    }
+
+    if(url.endsWith("/") == false){
+        url += "/";
+    }
+    if(url.startsWith("http") == false){
+        url.push_front("http://");
+    }
+
+    // Setting the cookie
+    request.setRawHeader("Cookie", "auth=" + cookie.toUtf8());
+
+    // When right clicked an item
     connect(ui->directoryList, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(display_menu_on_click(const QPoint &)));
     connect(ui->directoryContents, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(display_menu_on_click(const QPoint &)));
 
-    // TODO: Clear item selection when clicked another item in the second
-    //       widget is clicked
+    // Clearing the selections
     connect(ui->directoryList, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(clear_selection(QListWidgetItem *)));
     connect(ui->directoryContents, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(clear_selection(QListWidgetItem *)));
 
@@ -51,8 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
         firstItem->setFlags(firstItem->flags() & Qt::ItemIsEnabled);
     });
 
-
-    request.setUrl(QUrl(url + "setCookie"));
+    request.setUrl(QUrl(url + "getFolders"));
     manager->get(request);
 }
 
@@ -62,6 +86,10 @@ MainWindow::~MainWindow()
     delete manager;
 }
 
+// Sets the request cookies
+void MainWindow::setCookiesForRequest(){
+
+}
 
 // Adding files to the currently selected directory
 // If no directory selected, it is added to the root
@@ -280,4 +308,37 @@ void MainWindow::clear_selection(QListWidgetItem *item){
     }
 
 
+}
+
+// When the settings are opened
+void MainWindow::on_settings_triggered(bool fromStartup = false)
+{
+    QStringList values = settings.getValues();
+
+    QString urlValue = values[urlIndex].replace(" ", "");
+    QString cookieValue = values[cookieIndex].replace(" ", "");
+
+    if(urlValue == "" && cookieValue == "" && fromStartup){
+        QMessageBox messageBox;
+        messageBox.critical(nullptr, "No settings", "No settings were entered");
+        exit(1);
+    }
+
+    if(urlValue == "" && cookieValue == ""){
+        return;
+    }
+
+    qDebug() << "Setting";
+
+    url = urlValue;
+    cookie = cookieValue;
+
+    QFile infoFile(QDir::currentPath() + "/info");
+    infoFile.open(QIODevice::WriteOnly);
+    infoFile.write(url.toUtf8() + "\n" + cookie.toUtf8());
+
+    if(fromStartup == false){
+        qApp->quit();
+        QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+    }
 }

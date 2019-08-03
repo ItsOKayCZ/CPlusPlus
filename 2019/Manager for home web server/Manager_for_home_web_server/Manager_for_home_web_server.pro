@@ -27,17 +27,22 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        prompt.cpp
+        prompt.cpp \
+        settings.cpp
 
 HEADERS += \
         mainwindow.h \
-        prompt.h
+        prompt.h \
+        settings.h
 
 FORMS += \
         mainwindow.ui \
-        prompt.ui
+        prompt.ui \
+        settings.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=

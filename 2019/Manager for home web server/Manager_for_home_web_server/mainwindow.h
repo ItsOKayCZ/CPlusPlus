@@ -2,8 +2,11 @@
 #define MAINWINDOW_H
 
 #include "prompt.h"
+#include "settings.h"
 
 #include <QMainWindow>
+
+#include <QProcess>
 
 #include <QJsonDocument>
 #include <QJsonValue>
@@ -16,6 +19,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QNetworkCookie>
 
 #include <QMenu>
 
@@ -61,21 +65,33 @@ private slots:
     // Removes the selection in the QListWidget
     void clear_selection(QListWidgetItem *);
 
+    // When the settings are opened
+    void on_settings_triggered(bool);
+
 private:
     Ui::MainWindow *ui;
 
     QNetworkAccessManager *manager;
     QNetworkRequest request;
 
-    QString url = "http://localhost:8080/";
+    QString url;
+    int urlIndex = 0;
 
     QJsonDocument folderStructure;
     QString itemPath;
 
     Prompt prompt;
 
+    Settings settings;
+
+    QString cookie;
+    int cookieIndex = 1;
+
     // Displays the contents of a directory
     void updateDirectoryContents(QString path);
+
+    // Sets the request cookies
+    void setCookiesForRequest();
 
 };
 

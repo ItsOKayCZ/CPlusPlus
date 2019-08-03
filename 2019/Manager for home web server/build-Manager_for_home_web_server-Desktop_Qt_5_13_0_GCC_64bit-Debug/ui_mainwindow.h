@@ -28,7 +28,6 @@ public:
     QAction *addFolders;
     QAction *Remove;
     QAction *settings;
-    QAction *documentation;
     QWidget *centralWidget;
     QLabel *directoryLabel;
     QListWidget *directoryContents;
@@ -52,8 +51,6 @@ public:
         Remove->setObjectName(QString::fromUtf8("Remove"));
         settings = new QAction(MainWindow);
         settings->setObjectName(QString::fromUtf8("settings"));
-        documentation = new QAction(MainWindow);
-        documentation->setObjectName(QString::fromUtf8("documentation"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         directoryLabel = new QLabel(centralWidget);
@@ -63,8 +60,6 @@ public:
 "\n"
 "background-color: white;"));
         directoryContents = new QListWidget(centralWidget);
-        QListWidgetItem *__qlistwidgetitem = new QListWidgetItem(directoryContents);
-        __qlistwidgetitem->setFlags(Qt::ItemIsDragEnabled|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
         directoryContents->setObjectName(QString::fromUtf8("directoryContents"));
         directoryContents->setGeometry(QRect(260, 30, 471, 591));
         directoryContents->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -89,7 +84,6 @@ public:
         menuFiles_Folders->addAction(addFolders);
         menuFiles_Folders->addAction(Remove);
         menuUser->addAction(settings);
-        menuUser->addAction(documentation);
 
         retranslateUi(MainWindow);
 
@@ -103,15 +97,7 @@ public:
         addFolders->setText(QCoreApplication::translate("MainWindow", "Add folders", nullptr));
         Remove->setText(QCoreApplication::translate("MainWindow", "Remove", nullptr));
         settings->setText(QCoreApplication::translate("MainWindow", "Settings", nullptr));
-        documentation->setText(QCoreApplication::translate("MainWindow", "Documentation", nullptr));
         directoryLabel->setText(QCoreApplication::translate("MainWindow", "Directory:", nullptr));
-
-        const bool __sortingEnabled = directoryContents->isSortingEnabled();
-        directoryContents->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = directoryContents->item(0);
-        ___qlistwidgetitem->setText(QCoreApplication::translate("MainWindow", "Testing", nullptr));
-        directoryContents->setSortingEnabled(__sortingEnabled);
-
         menuFiles_Folders->setTitle(QCoreApplication::translate("MainWindow", "Files/Folders", nullptr));
         menuUser->setTitle(QCoreApplication::translate("MainWindow", "Help", nullptr));
     } // retranslateUi

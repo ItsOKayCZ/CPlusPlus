@@ -55,8 +55,13 @@ MainWindow::MainWindow(QWidget *parent) :
             return;
         }
 
-        // Setting the folderStructure
         QString response = reply->readAll();
+        if(response == "Unauthorized"){
+            ui->directoryContents->addItem(response);
+            return;
+        }
+
+        // Setting the folderStructure
         folderStructure = QJsonDocument::fromJson(response.toUtf8());
 
         // Showing the directories from the server
@@ -327,8 +332,6 @@ void MainWindow::on_settings_triggered(bool fromStartup = false)
     if(urlValue == "" && cookieValue == ""){
         return;
     }
-
-    qDebug() << "Setting";
 
     url = urlValue;
     cookie = cookieValue;

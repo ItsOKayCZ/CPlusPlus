@@ -91,11 +91,6 @@ MainWindow::~MainWindow()
     delete manager;
 }
 
-// Sets the request cookies
-void MainWindow::setCookiesForRequest(){
-
-}
-
 // Adding files to the currently selected directory
 // If no directory selected, it is added to the root
 void MainWindow::on_addFiles_triggered()
@@ -155,7 +150,7 @@ void MainWindow::updateDirectoryContents(QString directory){
 
         foreach(QJsonValue val, arr){
             if(val["type"] != "folder"){
-                list.append(val["name"].toString() + "\t\t\t(" + val["description"].toString().split("\n")[0] + ")");
+                list.append(val["name"].toString() + "\t(" + val["description"].toString().split("\n")[0] + ")");
             }
         }
 
@@ -184,9 +179,9 @@ void MainWindow::updateDirectoryContents(QString directory){
                         list.append("Go back");
                         foreach(QJsonValue val, contents){
                             if(val["type"] == "folder"){
-                                list.append(val["name"].toString() + "\t\t\t(Directory)");
+                                list.append(val["name"].toString() + "\t(Directory)");
                             } else {
-                                list.append(val["name"].toString() + "\t\t\t(" + val["description"].toString().split("\n")[0] + ")");
+                                list.append(val["name"].toString() + "\t(" + val["description"].toString().split("\n")[0] + ")");
                             }
                         }
 

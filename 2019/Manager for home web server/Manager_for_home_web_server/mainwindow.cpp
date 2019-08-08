@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QList<QByteArray> contents = infoFile.readAll().split(0x0a);
 
     // If the settings are correct
-    if(contents.size() == 2){
+    if(contents.size() == 2 && (contents[0] != "" || contents[1] != "")){
         url = contents[urlIndex];
         cookie = contents[cookieIndex];
     } else {
@@ -318,7 +318,7 @@ void MainWindow::clear_selection(QListWidgetItem *item){
 // When the settings are opened
 void MainWindow::on_settings_triggered(bool fromStartup = false)
 {
-    QStringList values = settings.getValues();
+    QStringList values = settings.getValues(fromStartup);
 
     QString urlValue = values[urlIndex].replace(" ", "");
     QString cookieValue = values[cookieIndex].replace(" ", "");

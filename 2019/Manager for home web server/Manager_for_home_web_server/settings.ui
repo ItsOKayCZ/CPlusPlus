@@ -31,6 +31,9 @@
     <height>140</height>
    </size>
   </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>Enter the server configuration</string>
   </property>

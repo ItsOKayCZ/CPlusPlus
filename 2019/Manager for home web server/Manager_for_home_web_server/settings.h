@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include <QtDebug>
+
 namespace Ui {
 class Settings;
 }
@@ -15,7 +17,7 @@ public:
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
 
-    QStringList getValues();
+    QStringList getValues(bool);
 
 private:
     Ui::Settings *ui;

@@ -6,6 +6,7 @@ Settings::Settings(QWidget *parent) :
     ui(new Ui::Settings)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
 }
 
 Settings::~Settings()
@@ -13,7 +14,7 @@ Settings::~Settings()
     delete ui;
 }
 
-QStringList Settings::getValues(){
+QStringList Settings::getValues(bool fromStartup){
     this->show();
 
     QStringList config;
@@ -29,6 +30,10 @@ QStringList Settings::getValues(){
 
     config[0] = ui->hostnameInput->text();
     config[1] = ui->cookieInput->text();
+
+    if((config[0] == "" || config[1] == "") && fromStartup == true){
+        this->close();
+    }
 
     return config;
 }

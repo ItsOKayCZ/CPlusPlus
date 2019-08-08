@@ -91,7 +91,7 @@ public:
 
     void retranslateUi(QDialog *Settings)
     {
-        Settings->setWindowTitle(QCoreApplication::translate("Settings", "Dialog", nullptr));
+        Settings->setWindowTitle(QCoreApplication::translate("Settings", "Enter the server configuration", nullptr));
         hostnameLabel->setText(QCoreApplication::translate("Settings", "Hostname:", nullptr));
         cookieLabel->setText(QCoreApplication::translate("Settings", "Password:", nullptr));
         label->setText(QCoreApplication::translate("Settings", "You can set the hostname and the cookie for the server", nullptr));

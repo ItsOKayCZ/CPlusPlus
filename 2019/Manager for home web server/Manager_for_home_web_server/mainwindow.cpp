@@ -95,7 +95,7 @@ MainWindow::~MainWindow()
 // If no directory selected, it is added to the root
 void MainWindow::on_addFiles_triggered()
 {
-    QStringList filePath = QFileDialog::getOpenFileNames(this, "Select a file", "/home/oldrich/Desktop", "All files (*)");
+    QStringList filePath = QFileDialog::getOpenFileNames(this, "Select a file", QDir::currentPath(), "All files (*)");
 
     QStringList contents;
     foreach(QString path, filePath){
@@ -111,7 +111,6 @@ void MainWindow::on_addFiles_triggered()
             } else {
                 path = itemPath + "/" + fileName;
             }
-
 
             request.setUrl(QUrl(url + "uploadFile?path=" + path));
             request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");

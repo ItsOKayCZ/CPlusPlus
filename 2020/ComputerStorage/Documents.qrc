@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="acceptance">Documents/acceptance.rtf</file>
+        <file alias="return">Documents/return.rtf</file>
+    </qresource>
+</RCC>
